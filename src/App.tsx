@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+// src/App.tsx
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
+import { Robot } from './components/models/Robot'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Canvas
+      camera={{
+        position: [10, 10, 10], // Cámara en diagonal, centrada en el origen
+        fov: 60,                 // Campo de visión moderado
+        near: 0.1,               // Plano de recorte cercano
+        far: 1000                // Plano de recorte lejano
+      }}
+      style={{
+        width: '100vw',  // Ocupa todo el ancho
+        height: '100vh', // Ocupa todo el alto
+      }}
+    >
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[3, 3, 3]} intensity={1} />
+
+      <mesh rotation={[0.5, 0.5, 0]}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color="#44aa88" />
+      </mesh>
+
+      {/* El robot 👇 */}
+      <Robot position={[10, 0, 0]} rotation={[0, Math.PI / 4, 0]} scale={1.2} />
+
+      <OrbitControls enableDamping />
+    </Canvas>
   )
 }
 
-export default App
+
