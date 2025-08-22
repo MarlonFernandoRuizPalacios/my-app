@@ -5,3 +5,5 @@ export function Robot(props: any) {
   const gltf = useGLTF('/models/Robot.glb')
   return <primitive object={gltf.scene} scale={1.2} {...props} />
 }
+
+useGLTF.preload('/models/Robot.glb')
